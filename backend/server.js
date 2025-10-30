@@ -10,11 +10,11 @@ app.use(express.json());
 app.use(cors());
 
 const pool = new pg.Pool({
-  host: process.env.DB_HOST || "database",
-  user: process.env.DB_USER || "admin",
-  password: process.env.DB_PASS || "123456",
-  database: process.env.DB_NAME || "searchdb",
-  port: 5432,
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "postgres",
+  password: process.env.DB_PASS || "12345678",
+  database: process.env.DB_NAME || "Task1",
+  port: 5433,
 });
 
 // ✅ LOGIN
