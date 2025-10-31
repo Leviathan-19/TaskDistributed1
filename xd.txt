@@ -1,0 +1,10 @@
+backend     npm start
+frontend    npm run dev
+http://localhost:3000/api/users
+
+Content-Type: application/json 
+
+{
+    "mail_users":"test@mail.com",
+    "password_users":"123"
+}

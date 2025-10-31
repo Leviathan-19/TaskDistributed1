@@ -14,7 +14,7 @@ const pool = new pg.Pool({
   user: process.env.DB_USER || "postgres",
   password: process.env.DB_PASS || "12345678",
   database: process.env.DB_NAME || "Task1",
-  port: 5433,
+  port: 5432,
 });
 
 // ✅ LOGIN
