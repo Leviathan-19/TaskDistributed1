@@ -16,10 +16,10 @@ export default function App() {
 
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
-      <h2>📸 Galería de Imágenes</h2>
+      <h2>Picsum API</h2>
       <input
         type="text"
-        placeholder="Buscar autor..."
+        placeholder="Search"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         style={{ padding: "8px", width: "300px", marginBottom: "20px" }}
