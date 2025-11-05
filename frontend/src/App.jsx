@@ -23,7 +23,7 @@ export default function App() {
 
     console.log("📡 Solicitando imágenes al backend...");
     axios
-      .get("http://localhost:3000/api/images")
+      .get(`${import.meta.env.VITE_API_URL}/api/images`)
       .then((res) => {
         console.log("✅ Imágenes obtenidas:", res.data.length, "elementos");
         setImages(res.data);

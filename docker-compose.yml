@@ -2,7 +2,6 @@ services:
   database:
     build: 
       context: ./database  
-      dockerfile: Dockerfile
     container_name: searchdb-container
     environment:
       POSTGRES_USER: admin
@@ -18,7 +17,6 @@ services:
   backend:
     build: 
       context: ./backend  
-      dockerfile: Dockerfile
     container_name: backend-container
     environment:
       DB_HOST: database  
@@ -32,6 +30,19 @@ services:
       - database
     networks:
       - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend-container
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    environment:
+      - VITE_API_URL=http://localhost:3000
 
 networks:
   app-network:
