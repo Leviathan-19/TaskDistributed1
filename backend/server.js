@@ -9,13 +9,24 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// db local
+// const pool = new pg.Pool({
+//   host: process.env.DB_HOST || "localhost",  
+//   user: process.env.DB_USER || "admin",       
+//   password: process.env.DB_PASS || "123456",  
+//   database: process.env.DB_NAME || "searchdb",
+//   port: 5433,                                 
+// });
+
+//db docker
 const pool = new pg.Pool({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "postgres",
-  password: process.env.DB_PASS || "12345678",
-  database: process.env.DB_NAME || "Task1",
-  port: 5433,
+  host: "localhost",       
+  user: "admin",
+  password: "123456",
+  database: "searchdb",
+  port: 5432,             
 });
+
 
 // LOGIN
 app.post("/api/login", async (req, res) => {

@@ -20,3 +20,15 @@ frontend
 
 npm install react-router-dom
 npm audit fix --force
+
+
+docker
+docker build -t leviathan119/searchdb:v1 .
+docker exec -it searchdb-container psql -U admin -d searchdb
+
+docker run -d --name searchdb-container -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=searchdb -p 5432:5432 leviathan119/searchdb:v1
+
+
+
+docker exec -it nice_brown psql -U admin -d searchdb
+

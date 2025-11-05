@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  database:
+    build: 
+      context: ./database  # Apunta a la carpeta database
+      dockerfile: Dockerfile
+    container_name: searchdb-container
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: searchdb
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: 
+      context: ./backend  # Apunta a la carpeta backend
+      dockerfile: Dockerfile
+    container_name: backend-container
+    environment:
+      DB_HOST: database  # Usa el nombre del servicio como hostname
+      DB_PORT: 5432
+      DB_USER: admin
+      DB_PASSWORD: 123456
+      DB_NAME: searchdb
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  postgres_data:
