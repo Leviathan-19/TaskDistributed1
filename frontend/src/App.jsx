@@ -1,31 +1,82 @@
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 export default function App() {
   const [images, setImages] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/images").then(res => setImages(res.data));
-  }, []);
+    console.log("🚀 App.jsx montado");
 
-  const filtered = images.filter(img =>
+    // Si no hay usuario logueado, redirige al login
+    const id_user = localStorage.getItem("id_user");
+    console.log("🧾 id_user en localStorage:", id_user);
+
+    if (!id_user) {
+      console.warn("⚠️ No hay usuario logueado, redirigiendo al login...");
+      navigate("/");
+      return;
+    }
+
+    console.log("📡 Solicitando imágenes al backend...");
+    axios
+      .get("http://localhost:3000/api/images")
+      .then((res) => {
+        console.log("✅ Imágenes obtenidas:", res.data.length, "elementos");
+        setImages(res.data);
+      })
+      .catch((err) => {
+        console.error("❌ Error al obtener imágenes:", err);
+      });
+  }, [navigate]);
+
+  // Filtro de búsqueda
+  const filtered = images.filter((img) =>
     img.author.toLowerCase().includes(search.toLowerCase())
   );
+
+  const logout = () => {
+    console.log("👋 Cerrando sesión...");
+    localStorage.removeItem("id_user");
+    navigate("/");
+  };
+
+  console.log("🧠 Renderizando App.jsx con", filtered.length, "imágenes visibles");
 
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
       <h2>Picsum API</h2>
+      <button
+        onClick={logout}
+        style={{
+          float: "right",
+          background: "#dc3545",
+          color: "white",
+          padding: "6px 12px",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Cerrar sesión
+      </button>
+
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Buscar autor..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => {
+          console.log("🔍 Cambiando búsqueda a:", e.target.value);
+          setSearch(e.target.value);
+        }}
         style={{ padding: "8px", width: "300px", marginBottom: "20px" }}
       />
+
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-        {filtered.map(img => (
+        {filtered.map((img) => (
           <div
             key={img.id}
             style={{
@@ -33,7 +84,7 @@ export default function App() {
               borderRadius: "10px",
               padding: "10px",
               width: "250px",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             <img

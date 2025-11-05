@@ -8,3 +8,15 @@ Content-Type: application/json
     "mail_users":"test@mail.com",
     "password_users":"123"
 }
+
+dependencias:
+
+
+
+backend
+
+
+frontend
+
+npm install react-router-dom
+npm audit fix --force
