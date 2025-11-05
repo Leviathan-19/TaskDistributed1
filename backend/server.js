@@ -19,12 +19,13 @@ app.use(cors());
 // });
 
 //db docker
+
 const pool = new pg.Pool({
-  host: "localhost",       
-  user: "admin",
-  password: "123456",
-  database: "searchdb",
-  port: 5432,             
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 5432,
+  user: process.env.DB_USER || 'admin',
+  password: process.env.DB_PASSWORD || '123456',
+  database: process.env.DB_NAME || 'searchdb'
 });
 
 

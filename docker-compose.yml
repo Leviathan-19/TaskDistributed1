@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   database:
     build: 
-      context: ./database  # Apunta a la carpeta database
+      context: ./database  
       dockerfile: Dockerfile
     container_name: searchdb-container
     environment:
@@ -19,11 +17,11 @@ services:
 
   backend:
     build: 
-      context: ./backend  # Apunta a la carpeta backend
+      context: ./backend  
       dockerfile: Dockerfile
     container_name: backend-container
     environment:
-      DB_HOST: database  # Usa el nombre del servicio como hostname
+      DB_HOST: database  
       DB_PORT: 5432
       DB_USER: admin
       DB_PASSWORD: 123456
